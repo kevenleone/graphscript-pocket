@@ -6,7 +6,7 @@ import { MyContext } from '../interfaces';
 import { constants, getGraphqlOperation, logger } from '../utils/globalMethods';
 
 const { AUTH_INVALID_TOKEN, AUTH_NOT_FOUND } = constants;
-const { AUTH_MIDDLEWARE_ENABLED, JWT_SECRET } = process.env;
+const { AUTH_MIDDLEWARE_ENABLED } = process.env;
 
 export const isAuth: MiddlewareFn<MyContext> = async (ctx, next) => {
   if (AUTH_MIDDLEWARE_ENABLED) {
@@ -18,7 +18,7 @@ export const isAuth: MiddlewareFn<MyContext> = async (ctx, next) => {
     if (authorization) {
       const token: string = authorization.split(' ').pop() || '';
       try {
-        const user: any = await promisify(jwt.verify)(token, JWT_SECRET);
+        const user: any = await promisify(jwt.verify)(token);
         ctx.context.req.headers.loggedUser = user;
         logger.debug(
           `${user.firstName} is running a graphQL request to ${operationName}`,

@@ -1,3 +1,4 @@
+import { config } from 'dotenv';
 import {
   Connection,
   ConnectionOptions,
@@ -6,6 +7,9 @@ import {
 } from 'typeorm';
 
 import { logger } from '../utils/globalMethods';
+
+config();
+
 const { ENVIRONMENT } = process.env;
 
 export const createTypeormConn = async (): Promise<Connection> => {

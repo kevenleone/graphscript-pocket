@@ -2,22 +2,15 @@ import bcrypt from 'bcryptjs';
 import jsonwebtoken from 'jsonwebtoken';
 import { Arg, Mutation, Resolver } from 'type-graphql';
 import { promisify } from 'util';
-import { v4 } from 'uuid';
 
 import { User } from '../../entity/User';
 import { createBaseResolver } from '../../utils/createBaseResolver';
 import { constants, logger } from '../../utils/globalMethods';
-import Queue from '../../utils/Queue';
 import { CreateUserInput, FilterUserInput, UpdateUserInput } from './Inputs';
 
 const { JWT_SECRET = '' } = process.env;
 
-const {
-  JOB_RECOVERY_MAILER,
-  JOB_REGISTRATION_MAILER,
-  USER_NOT_FOUND,
-  USER_PASSWORD_INVALID,
-} = constants;
+const { USER_NOT_FOUND, USER_PASSWORD_INVALID } = constants;
 
 const Inputs = {
   create: CreateUserInput,
@@ -33,7 +26,7 @@ export class UserResolver extends BaseResolver {
   async createUser(
     @Arg('data', () => CreateUserInput) data: CreateUserInput,
   ): Promise<User | undefined> {
-    const { email, firstName } = data;
+    const { email } = data;
     let user = await User.findOne({
       where: {
         email,
@@ -46,7 +39,6 @@ export class UserResolver extends BaseResolver {
         ...data,
         password: hashedPassword,
       });
-      Queue.add(JOB_REGISTRATION_MAILER, { email, firstName });
     }
     return user;
   }
@@ -88,11 +80,7 @@ export class UserResolver extends BaseResolver {
     if (!user) {
       return false;
     }
-    Queue.add(JOB_RECOVERY_MAILER, {
-      email,
-      firstName: user.firstName,
-      token: v4(),
-    });
+
     return true;
   }
 }
