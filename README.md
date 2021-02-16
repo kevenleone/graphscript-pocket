@@ -1,19 +1,6 @@
-
-<pre align="center">
-
-   ____                 _                   _       _   
-  / ___|_ __ __ _ _ __ | |__  ___  ___ _ __(_)_ __ | |_ 
- | |  _| '__/ _` | '_ \| '_ \/ __|/ __| '__| | '_ \| __|
- | |_| | | | (_| | |_) | | | \__ | (__| |  | | |_) | |_ 
-  \____|_|  \__,_| .__/|_| |_|___/\___|_|  |_| .__/ \__|
-                 |_|                         |_|        
-</pre>
-
 <p align="center"> A simple GraphQL boilerplate using TypeScript and TypeORM </p>
 
 <p align="center">
-  <a href='https://coveralls.io/github/kevenleone/graphscript'><img src='https://coveralls.io/repos/github/kevenleone/graphscript/badge.svg' alt='Coverage Status' /></a>
-  <img src="https://badges.greenkeeper.io/kevenleone/graphscript.svg"> 
   <a href="http://makeapullrequest.com">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs Welcome">
   </a>
@@ -21,8 +8,6 @@
     <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="License MIT">
   </a>
 </p>
-
-
 
 ## :bulb: Introduction 
 
@@ -76,4 +61,4 @@ If you are in a private repository, access the following link replacing `$YOUR_R
 - `https://heroku.com/deploy?template=$YOUR_REPOSITORY_LINK$`
 
 ## :book: License
-MIT license, Copyright (c) 2020 Keven Leone.
+MIT license, Copyright (c) 2021 Keven Leone.

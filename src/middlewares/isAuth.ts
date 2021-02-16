@@ -3,14 +3,12 @@ import { MiddlewareFn } from 'type-graphql';
 import { promisify } from 'util';
 
 import { MyContext } from '../interfaces';
-import { defaults, getGraphqlOperation, logger } from '../utils/globalMethods';
+import { constants, getGraphqlOperation, logger } from '../utils/globalMethods';
+
+const { AUTH_INVALID_TOKEN, AUTH_NOT_FOUND } = constants;
+const { AUTH_MIDDLEWARE_ENABLED, JWT_SECRET } = process.env;
 
 export const isAuth: MiddlewareFn<MyContext> = async (ctx, next) => {
-  const {
-    AUTH_MIDDLEWARE_ENABLED,
-    CONSTANTS: { AUTH_INVALID_TOKEN, AUTH_NOT_FOUND },
-    JWT_SECRET,
-  } = defaults;
   if (AUTH_MIDDLEWARE_ENABLED) {
     const {
       body,

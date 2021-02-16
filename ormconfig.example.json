@@ -1,10 +1,10 @@
 [
   {
     "name": "default",
-    "type": "postgres",
+    "type": "mysql",
     "host": "localhost",
-    "port": 5432,
-    "username": "postgres",
+    "port": 3306,
+    "username": "root",
     "password": "root",
     "database": "graphscript",
     "synchronize": true,
@@ -22,10 +22,10 @@
   },
   {
     "name": "production",
-    "type": "postgres",
+    "type": "mysql",
     "host": "localhost",
-    "port": 5432,
-    "username": "postgres",
+    "port": 3306,
+    "username": "root",
     "password": "root",
     "database": "graphscript",
     "synchronize": true,

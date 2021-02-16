@@ -1,24 +1,20 @@
 import 'reflect-metadata';
 
 import { ApolloServer, Config } from 'apollo-server-express';
-import { router as BullRouter, setQueues } from 'bull-board';
 import { config } from 'dotenv';
 import Express from 'express';
 
 import createSchema from './utils/createSchema';
-import { defaults, logger } from './utils/globalMethods';
-import Queue from './utils/Queue';
+import { logger } from './utils/globalMethods';
 import { createTypeormConn } from './utils/typeORMConn';
 
 (async (): Promise<void> => {
   config();
-  const { APP_NAME, ENVIRONMENT, RUN_PLAYGROUND } = defaults;
+  const { APP_NAME, ENVIRONMENT, RUN_PLAYGROUND } = process.env;
   const { PORT } = process.env;
   const httpPort = PORT || 3333;
 
   logger.debug(`Starting ${APP_NAME} Server`);
-
-  setQueues(Queue.queues.map((queue) => queue.bull));
 
   await createTypeormConn();
 
@@ -50,11 +46,7 @@ import { createTypeormConn } from './utils/typeORMConn';
     cors: true,
   });
 
-  server.use('/admin/queues', BullRouter);
-
-  server.get('/', (_, res) =>
-    res.json({ message: `${defaults.APP_NAME} is Running` }),
-  );
+  server.get('/', (_, res) => res.json({ message: `${APP_NAME} is Running` }));
 
   server.listen(httpPort, () => {
     logger.debug(`${APP_NAME} has started | PORT: ${httpPort}`);

@@ -6,11 +6,18 @@ import { v4 } from 'uuid';
 
 import { User } from '../../entity/User';
 import { createBaseResolver } from '../../utils/createBaseResolver';
-import { constants, defaults, logger } from '../../utils/globalMethods';
+import { constants, logger } from '../../utils/globalMethods';
 import Queue from '../../utils/Queue';
 import { CreateUserInput, FilterUserInput, UpdateUserInput } from './Inputs';
 
-const { JOB_RECOVERY_MAILER, JOB_REGISTRATION_MAILER } = constants;
+const { JWT_SECRET = '' } = process.env;
+
+const {
+  JOB_RECOVERY_MAILER,
+  JOB_REGISTRATION_MAILER,
+  USER_NOT_FOUND,
+  USER_PASSWORD_INVALID,
+} = constants;
 
 const Inputs = {
   create: CreateUserInput,
@@ -49,10 +56,6 @@ export class UserResolver extends BaseResolver {
     @Arg('email') email: string,
     @Arg('password') password: string,
   ): Promise<string | Error> {
-    const {
-      CONSTANTS: { USER_NOT_FOUND, USER_PASSWORD_INVALID },
-      JWT_SECRET,
-    } = defaults;
     const user = await User.findOne({ where: { email } });
 
     if (!user) {
